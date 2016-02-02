@@ -14,7 +14,7 @@ public class FarmSolution {
 
     public static void main(String args[]) throws Exception {
         List<Rectangle> barrenLand = readRectanglesFromArgs(args);
-        List<Set<Coordinate>> fertileCoordinateSets = new ArrayList<Set<Coordinate>>();
+        List<Set<Coordinate>> fertileCoordinateSets = new ArrayList<>();
         for (int x = 0; x <= MAX_X ; x++) {
             for (int y = 0; y <= MAX_Y; y++) {
                 checkCoordinate(new Coordinate(x, y),null,fertileCoordinateSets, barrenLand );
@@ -38,7 +38,7 @@ public class FarmSolution {
             //This is a newly found fertile coordinate
             if (currentFertileSet == null) {
                 // This is a new fertile area - create a new set for it.
-                currentFertileSet = new HashSet<Coordinate>();
+                currentFertileSet = new HashSet<>();
                 fertileSets.add(currentFertileSet);
             }
             currentFertileSet.add(coordinate);
@@ -64,24 +64,20 @@ public class FarmSolution {
             }        }
     }
 
-    // Loop through list of fertile coordinate sets and determine if passed coordinate is in any of them
+    // Determine if passed coordinate is in any of the given sets of Coordinates
     private static boolean coordinateInFertileSets(Coordinate coordinate, List<Set<Coordinate>> fertileSets) {
-        for( Set<Coordinate> coordinateSet : fertileSets) {
-            if (coordinateSet.contains(coordinate)) {
-                return true;
-            }
-        }
-        return false;
+        return fertileSets.stream()
+                .filter(coordinateSet -> coordinateSet.contains(coordinate))
+                .findAny()
+                .isPresent();
     }
 
-    // Loop through list of barren rectangles and determine if passed coordinate is in any of them
+    // Determine is passed coordinate is in any of the list of barren rectangles
     private static boolean coordinateInBarrenRectangles(Coordinate coordinate, List<Rectangle> barrenRectangles) {
-        for (Rectangle currentRectangle : barrenRectangles) {
-            if (currentRectangle.containsCoordinate(coordinate)) {
-                return true;
-            }
-        }
-        return false;
+        return barrenRectangles.stream()
+                .filter(rectangle -> rectangle.containsCoordinate(coordinate))
+                .findAny()
+                .isPresent();
     }
 
     private static List<Rectangle> readRectanglesFromArgs(String args[]) {
