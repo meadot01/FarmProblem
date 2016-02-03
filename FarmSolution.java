@@ -15,6 +15,7 @@ public class FarmSolution {
     public static void main(String args[]) throws Exception {
         List<Rectangle> barrenLand = readRectanglesFromArgs(args);
         List<Set<Coordinate>> fertileCoordinateSets = new ArrayList<>();
+        //Check all coordinates on grid
         for (int x = 0; x <= MAX_X ; x++) {
             for (int y = 0; y <= MAX_Y; y++) {
                 checkCoordinate(new Coordinate(x, y),null,fertileCoordinateSets, barrenLand );
@@ -24,7 +25,9 @@ public class FarmSolution {
         if (fertileCoordinateSets.size() == 0 ) {
             System.out.println("No fertile land");
         } else {
+            //Sort Sets smallest to largest
             fertileCoordinateSets.sort((o1, o2) -> new Integer(o1.size()).compareTo(new Integer(o2.size())));
+            //Output size of all fertile land sets
             System.out.print("Fertile land areas = ");
             for(Set<Coordinate> fertileCoordinates : fertileCoordinateSets) {
                 System.out.print(fertileCoordinates.size() + "  ");
