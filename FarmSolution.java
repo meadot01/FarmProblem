@@ -24,6 +24,7 @@ public class FarmSolution {
         if (fertileCoordinateSets.size() == 0 ) {
             System.out.println("No fertile land");
         } else {
+            fertileCoordinateSets.sort((o1, o2) -> new Integer(o1.size()).compareTo(new Integer(o2.size())));
             System.out.print("Fertile land areas = ");
             for(Set<Coordinate> fertileCoordinates : fertileCoordinateSets) {
                 System.out.print(fertileCoordinates.size() + "  ");
